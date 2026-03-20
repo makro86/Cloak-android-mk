@@ -18,6 +18,27 @@ class ConfigFragment : PreferenceFragmentCompat() {
                 Pair("Transport", "direct"), Pair("UID", ""), Pair("PublicKey",""), Pair("ServerName", "bing.com"),
                 Pair("AlternativeNames", ""), Pair("CDNOriginHost", ""), Pair("CDNWsUrlPath", ""), Pair("NumConn","4"),
                 Pair("BrowserSig", "chrome"), Pair("StreamTimeout","300"), Pair("KeepAlive", "0"))
+
+        // Add this new one (or insert into ary if you prefer)
+        val localAddrPref: Preference? = findPreference("LocalAddr")
+        val localAddrValue: String? = options["LocalAddr"]
+        if (localAddrValue != null && localAddrValue.isNotEmpty()) {
+            // Use user/saved value
+            (localAddrPref as? EditTextPreference)?.text = localAddrValue
+            options["LocalAddr"] = localAddrValue
+        } else {
+            // Default: empty = random
+            (localAddrPref as? EditTextPreference)?.text = ""
+            // No need to put empty string — Go will default to random if key missing or ""
+        }
+        
+        // Make sure changes update options (same as others)
+        localAddrPref?.setOnPreferenceChangeListener { _, newValue ->
+            val str = newValue.toString().trim()
+            options["LocalAddr"] = str
+            true
+        }
+        
         for (element in ary) {
             val key = element.first
             val defaultValue = element.second
