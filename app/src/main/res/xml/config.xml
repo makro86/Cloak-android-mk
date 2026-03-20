@@ -50,5 +50,12 @@
             android:digits="0123456789" android:title="@string/cloak_stream_timeout" android:singleLine="true" />
         <EditTextPreference android:key="KeepAlive" android:persistent="false" android:inputType="numberDecimal"
             android:digits="0123456789" android:title="@string/cloak_keepalive" android:singleLine="true" />
+        <EditTextPreference
+            android:key="LocalAddr"
+            android:title="Local listen address"
+            android:summary="Format: 127.0.0.1:port (leave empty or :0 for random port)"
+            android:defaultValue=""
+            android:inputType="text"
+            android:selectAllOnFocus="true" />
     </PreferenceCategory>
 </PreferenceScreen>
